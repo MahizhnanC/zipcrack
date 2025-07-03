@@ -18,14 +18,17 @@ def crack_zip(file_path, digits):
     print(f"🔍 Brute-forcing ZIP: {file_path}")
     print(f"🔢 Trying {total:,} combinations (numeric, {digits} digits)...")
 
-    for i in tqdm(range(total), desc="Trying passwords"):
-        password = str(i).zfill(digits).encode('utf-8')
-        try:
-            zip_file.extractall(pwd=password)
-            print(f"\n✅ Password found: {password.decode()}")
-            return
-        except:
-            continue
+    try:
+        for i in tqdm(range(total), desc="Trying passwords"):
+            password = str(i).zfill(digits).encode('utf-8')
+            try:
+                zip_file.extractall(pwd=password)
+                print(f"\n✅ Password found: {password.decode()}")
+                return
+            except:
+                continue
+    except KeyboardInterrupt:
+        print("\n🛑 Brute-force interrupted by user.")
 
     print("❌ Password not found.")
 
